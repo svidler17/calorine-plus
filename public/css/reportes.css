@@ -1,0 +1,109 @@
+body{
+font-family:'Inter',sans-serif;
+background:#f4f6fb;
+}
+
+/* TARJETAS */
+
+.report-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+text-align:center;
+animation:fadeIn .4s ease;
+}
+
+.card p{
+font-size:28px;
+font-weight:700;
+color:#4f46e5;
+}
+
+/* GRAFICAS */
+
+.graficas-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+.grafica-card{
+background:white;
+padding:20px;
+border-radius:14px;
+box-shadow:0 15px 30px rgba(0,0,0,0.08);
+transition:.3s;
+animation:fadeIn .5s ease;
+}
+
+.grafica-card:hover{
+transform:translateY(-4px);
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+}
+
+/* TABLAS */
+
+.tabla-box{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+animation:fadeIn .5s ease;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th{
+background:#4f46e5;
+color:white;
+padding:10px;
+}
+
+td{
+padding:10px;
+border-bottom:1px solid #eee;
+}
+
+tr:hover{
+background:#f9fafb;
+}
+
+/* ANIMACION */
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+
+.report-grid{
+grid-template-columns:1fr;
+}
+
+.graficas-grid{
+grid-template-columns:1fr;
+}
+
+}

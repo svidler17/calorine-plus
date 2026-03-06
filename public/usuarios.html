@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión de Usuarios - Calorine Plus</title>
+
+<link rel="stylesheet" href="admin.css">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i data-lucide="plus-square" class="logo-icon"></i>
+            <span>Calorine <b>Plus</b></span>
+        </div>
+
+        <nav>
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Menú Principal
+            </a>
+
+            <a href="inventario.html">
+                <i data-lucide="package"></i> Inventario
+            </a>
+
+            <a href="ventas.html">
+                <i data-lucide="shopping-cart"></i> Ventas
+            </a>
+
+            <a href="clientes.html">
+                <i data-lucide="users"></i> Clientes
+            </a>
+
+            <a href="usuarios.html" class="active">
+                <i data-lucide="shield"></i> Gestión Usuarios
+            </a>
+
+            <a href="reportes.html">
+                <i data-lucide="bar-chart-3"></i> Reportes
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="user-text">
+                    <span class="name">Administrador</span>
+                    <span class="role">Gestión de Usuarios</span>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="btn-logout">
+                Cerrar Sesión
+            </button>
+        </header>
+
+        <!-- GRID PRINCIPAL -->
+        <section class="info-grid">
+
+            <!-- CREAR USUARIO -->
+            <div class="card">
+                <h4>Crear Usuario</h4>
+
+                <input type="text" id="nombre" placeholder="Nombre completo">
+                <input type="text" id="cedula" placeholder="Cédula">
+                <input type="password" id="password" placeholder="Contraseña">
+
+                <select id="rol">
+                    <option value="operador">Operador</option>
+                    <option value="admin">Administrador</option>
+                </select>
+
+                <button id="crearBtn" class="mini-card blue" style="margin-top:10px; cursor:pointer;">
+                    Crear Usuario
+                </button>
+
+                <p id="mensaje" style="margin-top:10px;"></p>
+            </div>
+
+            <!-- LISTA DE USUARIOS -->
+            <div class="card" style="grid-column: span 2;">
+                <h4>Lista de Usuarios</h4>
+
+                <table style="width:100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="text-align:left; border-bottom:1px solid #ddd;">
+                            <th style="padding:10px;">Nombre</th>
+                            <th style="padding:10px;">Cédula</th>
+                            <th style="padding:10px;">Rol</th>
+                            <th style="padding:10px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaUsuarios"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<!-- TUS JS IMPORTANTES -->
+<script type="module" src="admin-guard.js"></script>
+<script type="module" src="logout.js"></script>
+<script type="module" src="menu-redirect.js"></script>
+<script type="module" src="usuarios.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventario - Calorine Plus</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i data-lucide="plus-square" class="logo-icon"></i>
+            <span>Calorine <b>Plus</b></span>
+        </div>
+
+        <nav>
+            <a href="admin-dashboard.html">
+                <i data-lucide="layout-dashboard"></i> Menú Principal
+            </a>
+
+            <a href="inventario.html" class="active">
+                <i data-lucide="package"></i> Inventario
+            </a>
+
+            <a href="venta.html">
+                <i data-lucide="shopping-cart"></i> Ventas
+            </a>
+
+            <a href="clientes.html">
+                <i data-lucide="users"></i> Clientes
+            </a>
+
+            <a href="usuarios.html">
+                <i data-lucide="shield"></i> Usuarios
+            </a>
+
+            <a href="reportes.html">
+                <i data-lucide="bar-chart-3"></i> Reportes
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="user-text">
+                    <span class="name">Administrador</span>
+                    <span class="role">Gestión de Inventario</span>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="btn-logout">
+                Cerrar Sesión
+            </button>
+        </header>
+
+        <!-- GRID PRINCIPAL -->
+        <section class="info-grid">
+
+            <!-- FORMULARIO -->
+            <div class="card">
+                <h4>Agregar Producto</h4>
+
+                <input type="text" id="nombreProducto" placeholder="Nombre del producto">
+                <input type="text" id="codigoProducto" placeholder="Código">
+                <input type="number" id="stockProducto" placeholder="Stock actual">
+                <input type="number" id="precioCompra" placeholder="Precio de compra">
+                <input type="number" id="precioVenta" placeholder="Precio de venta">
+                <input type="date" id="fechaVencimiento">
+                <input type="number" id="stockMinimo" placeholder="Stock mínimo">
+
+                <button id="guardarProducto" class="btn-primary">
+                    Guardar Producto
+                </button>
+            </div>
+
+            <!-- TABLA -->
+            <div class="card" style="grid-column: span 2;">
+                <h4>Lista de Productos</h4>
+
+                <table class="tabla-sistema">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                            <th>Stock</th>
+                            <th>Precio Venta</th>
+                            <th>Vencimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaInventario"></tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<script type="module" src="js/admin-guard.js"></script>
+<script type="module" src="js/logout.js"></script>
+<script type="module" src="js/inventario.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Reportes - Calorine Plus</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/reportes.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+<aside class="sidebar">
+
+<div class="logo">
+<i data-lucide="plus-square"></i>
+<span>Calorine <b>Plus</b></span>
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">
+<i data-lucide="layout-dashboard"></i> Menú
+</a>
+
+<a href="inventario.html">
+<i data-lucide="package"></i> Inventario
+</a>
+
+<a href="venta.html">
+<i data-lucide="shopping-cart"></i> Ventas
+</a>
+ <a href="clientes.html">
+                <i data-lucide="users"></i> Clientes
+            </a>
+            <a href="usuarios.html">
+                <i data-lucide="shield"></i> Usuarios
+            </a>
+<a href="reportes.html" class="active">
+<i data-lucide="bar-chart-3"></i> Reportes
+</a>
+
+</nav>
+
+</aside>
+
+<main class="main-content">
+
+<header class="top-bar">
+
+<div class="user-text">
+<span class="name">Panel de Reportes</span>
+<span class="role">Estadísticas del Sistema</span>
+</div>
+
+</header>
+
+<!-- TARJETAS -->
+
+<div class="report-grid">
+
+<div class="card">
+<h3>Ventas del Día</h3>
+<p id="ventasHoy">$0</p>
+</div>
+
+<div class="card">
+<h3>Ventas del Mes</h3>
+<p id="ventasMes">$0</p>
+</div>
+
+</div>
+
+<!-- GRAFICAS -->
+
+<div class="graficas-grid">
+
+<div class="grafica-card">
+<h3>Ventas del Mes</h3>
+<canvas id="graficaVentasMes"></canvas>
+</div>
+
+<div class="grafica-card">
+<h3>Métodos de Pago</h3>
+<canvas id="graficaPagos"></canvas>
+</div>
+
+<div class="grafica-card">
+<h3>Productos Más Vendidos</h3>
+<canvas id="graficaProductos"></canvas>
+</div>
+
+</div>
+
+<!-- TABLAS -->
+
+<div class="tabla-box">
+
+<h3>Ventas por Método de Pago</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Método</th>
+<th>Total</th>
+</tr>
+</thead>
+
+<tbody id="tablaPagos"></tbody>
+
+</table>
+
+</div>
+
+<div class="tabla-box">
+
+<h3>Medicamentos Más Vendidos</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Producto</th>
+<th>Cantidad</th>
+</tr>
+</thead>
+
+<tbody id="tablaMasVendidos"></tbody>
+
+</table>
+
+</div>
+
+<div class="tabla-box">
+
+<h3>Medicamentos Menos Vendidos</h3>
+
+<table>
+
+<thead>
+<tr>
+<th>Producto</th>
+<th>Cantidad</th>
+</tr>
+</thead>
+
+<tbody id="tablaMenosVendidos"></tbody>
+
+</table>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<script type="module" src="js/reportes.js"></script>
+
+</body>
+</html>

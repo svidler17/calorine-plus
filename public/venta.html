@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ventas - Calorine Plus</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/ventas.css">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+<div class="logo">
+<i data-lucide="plus-square"></i>
+<span>Calorine <b>Plus</b></span>
+</div>
+
+<nav>
+
+<a href="admin-dashboard.html">
+<i data-lucide="layout-dashboard"></i> Menú Principal
+</a>
+
+<a href="inventario.html">
+<i data-lucide="package"></i> Inventario
+</a>
+
+<a href="venta.html" class="active">
+<i data-lucide="shopping-cart"></i> Ventas
+</a>
+
+<a href="clientes.html">
+<i data-lucide="users"></i> Clientes
+</a>
+
+<a href="usuarios.html">
+<i data-lucide="shield"></i> Usuarios
+</a>
+
+<a href="reportes.html">
+<i data-lucide="bar-chart-3"></i> Reportes
+</a>
+
+</nav>
+
+</aside>
+
+<!-- CONTENIDO -->
+
+<main class="main-content">
+
+<header class="top-bar">
+
+<div class="user-text">
+<span class="name">Sistema de Ventas</span>
+<span class="role">Punto de Venta</span>
+</div>
+
+</header>
+
+<div class="pos-container">
+
+<!-- BUSCADOR -->
+
+<div class="pos-card">
+
+<h3>Buscar Producto</h3>
+
+<input
+type="text"
+id="buscador"
+placeholder="Buscar por nombre o código..."
+>
+
+<div id="resultados"></div>
+
+</div>
+
+<!-- CARRITO -->
+
+<div class="pos-card">
+
+<h3>Carrito</h3>
+
+<div id="carrito"></div>
+
+<div class="total-box">
+Total: $<span id="total">0.00</span>
+</div>
+
+<div class="pago-box">
+
+<label>Método de Pago</label>
+
+<select id="metodoPago">
+
+<option value="efectivo">💵 Efectivo</option>
+<option value="transferencia">🏦 Transferencia</option>
+
+
+</select>
+
+</div>
+
+<button id="btnVender" class="btn-finalizar">
+Finalizar Venta
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<script type="module" src="js/venta.js"></script>
+
+</body>
+</html>

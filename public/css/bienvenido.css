@@ -1,0 +1,155 @@
+:root {
+    /* Colores ajustados para más contraste */
+    --verde-brillante: #00ff9d; /* Verde farmacia neón para que resalte */
+    --verde-med: #10b981;
+    --fondo-oscuro: #0f172a;    /* Azul medianoche profundo y elegante */
+    --blanco-puro: #ffffff;
+    --texto-suave: #94a3b8;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Outfit', 'Segoe UI', sans-serif; 
+}
+
+body {
+    background-color: var(--fondo-oscuro);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* --- Hojas de las esquinas (Resaltadas) --- */
+.hoja {
+    position: absolute;
+    background: linear-gradient(135deg, var(--verde-brillante), var(--verde-med));
+    opacity: 0.25; /* Aumentamos opacidad para que resalten */
+    border-radius: 0 100% 0 100%;
+    z-index: 1;
+    filter: blur(2px); /* Un pequeño desenfoque para dar profundidad */
+    box-shadow: 0 0 40px rgba(0, 255, 157, 0.2);
+}
+
+.h1 { 
+    width: 350px; 
+    height: 350px; 
+    top: -120px; 
+    left: -120px; 
+    transform: rotate(25deg); 
+}
+
+.h2 { 
+    width: 300px; 
+    height: 300px; 
+    bottom: -80px; 
+    right: -80px; 
+    transform: rotate(-15deg); 
+}
+
+/* --- Contenedor Principal con efecto de cristal --- */
+.main-loader {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 40px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* --- Animación de la Píldora --- */
+.pildora-container {
+    width: 60px;
+    height: 100px;
+    margin: 0 auto 30px;
+    animation: flotar 3s infinite ease-in-out;
+}
+
+.pildora-superior {
+    height: 50%;
+    background: var(--verde-brillante); /* Color resaltado */
+    border-radius: 30px 30px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
+}
+
+.cruz-blanca {
+    width: 20px;
+    height: 4px;
+    background: var(--fondo-oscuro);
+    position: relative;
+}
+
+.cruz-blanca::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 20px;
+    background: var(--fondo-oscuro);
+    top: -8px;
+    left: 8px;
+}
+
+.pildora-inferior {
+    height: 50%;
+    background: var(--blanco-puro);
+    border-radius: 0 0 30px 30px;
+}
+
+/* --- Textos --- */
+.brand-name {
+    color: var(--blanco-puro);
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+}
+
+.brand-name span { 
+    color: var(--verde-brillante); 
+    font-weight: 300; 
+}
+
+#msg-carga {
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* --- Barra de Carga --- */
+.progress-container {
+    width: 240px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.progress-bar-fluid {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--verde-med), var(--verde-brillante));
+    border-radius: 10px;
+    box-shadow: 0 0 15px var(--verde-brillante);
+    animation: cargarLento 3.5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Animaciones --- */
+@keyframes flotar {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-20px) rotate(8deg); }
+}
+
+@keyframes cargarLento {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}

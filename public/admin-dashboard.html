@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Administrador - Calorine Plus</title>
+
+<link rel="stylesheet" href="css/admin.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard-container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i data-lucide="plus-square" class="logo-icon"></i>
+            <span>Calorine <b>Plus</b></span>
+        </div>
+
+        <nav>
+            <a href="admin-dashboard.html" class="active">
+                <i data-lucide="layout-dashboard"></i> Menú Principal
+            </a>
+            <a href="inventario.html">
+                <i data-lucide="package"></i> Inventario
+            </a>
+            <a href="venta.html">
+                <i data-lucide="shopping-cart"></i> Ventas
+            </a>
+            <a href="clientes.html">
+                <i data-lucide="users"></i> Clientes
+            </a>
+            <a href="usuarios.html">
+                <i data-lucide="shield"></i> Usuarios
+            </a>
+            <a href="reportes.html">
+                <i data-lucide="bar-chart-3"></i> Reportes
+            </a>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="top-bar">
+            <div class="user-info">
+                <div class="user-text">
+                    <span class="name">Administrador</span>
+                    <span class="role">Rol: Admin</span>
+                </div>
+            </div>
+
+            <button id="logoutBtn" class="btn-logout">
+                Cerrar Sesión
+            </button>
+        </header>
+
+        <!-- KPI -->
+        <section class="kpi-grid">
+
+            <div class="card kpi green">
+                <div class="kpi-data">
+                    <span>Ventas Hoy</span>
+                    <h3>$0</h3>
+                </div>
+            </div>
+
+            <!-- BAJO STOCK -->
+            <div class="card kpi red" id="cardBajoStock" style="cursor:pointer;">
+                <div class="kpi-data">
+                    <span>Bajo Stock</span>
+                    <h3 id="contadorBajoStock">0</h3>
+                </div>
+            </div>
+
+            <!-- PRÓXIMOS A VENCER -->
+            <div class="card kpi blue" id="cardVencimiento" style="cursor:pointer;">
+                <div class="kpi-data">
+                    <span>Próximos a Vencer</span>
+                    <h3 id="alertaVencimiento">0</h3>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- PANEL DE ALERTAS -->
+        <section id="panelAlertas" class="card" style="display:none; margin-top:20px;">
+            <h4 id="tituloAlerta"></h4>
+
+            <table style="width:100%; margin-top:15px;">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                        <th>Fecha Vencimiento</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaAlertas"></tbody>
+            </table>
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+lucide.createIcons();
+</script>
+
+<script type="module">
+import { auth, db } from "./js/firebase-config.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+let productos = [];
+
+/* =========================
+   EVENTOS CLICK
+========================= */
+document.getElementById("cardBajoStock")
+    .addEventListener("click", mostrarBajoStock);
+
+document.getElementById("cardVencimiento")
+    .addEventListener("click", mostrarProximosVencer);
+
+/* =========================
+   AUTH Y CARGA
+========================= */
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+        window.location.href = "index.html";
+        return;
+    }
+
+    const docRef = doc(db, "usuarios", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists() || docSnap.data().rol !== "admin") {
+        window.location.href = "operador.html";
+        return;
+    }
+
+    await cargarProductos();
+});
+
+/* =========================
+   CARGAR PRODUCTOS
+========================= */
+async function cargarProductos() {
+
+    const querySnapshot = await getDocs(collection(db, "inventario"));
+    productos = [];
+
+    querySnapshot.forEach((docSnap) => {
+        productos.push({
+            id: docSnap.id,
+            ...docSnap.data()
+        });
+    });
+
+    actualizarContadores();
+}
+
+/* =========================
+   ACTUALIZAR CONTADORES
+========================= */
+function actualizarContadores() {
+
+    const bajoStock = productos.filter(p => 
+        Number(p.stock || 0) <= Number(p.stockMinimo || 0)
+    );
+
+    document.getElementById("contadorBajoStock").innerText = bajoStock.length;
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    const limite = new Date();
+    limite.setDate(hoy.getDate() + 7);
+    limite.setHours(23,59,59,999);
+
+    const proximos = productos.filter(p => {
+
+        if (!p.fechaVencimiento) return false;
+
+        const fecha = new Date(p.fechaVencimiento);
+        if (isNaN(fecha)) return false;
+
+        return fecha >= hoy && fecha <= limite;
+    });
+
+    document.getElementById("alertaVencimiento").innerText = proximos.length;
+}
+
+/* =========================
+   MOSTRAR TABLAS
+========================= */
+function mostrarBajoStock() {
+
+    const bajoStock = productos.filter(p => 
+        Number(p.stock || 0) <= Number(p.stockMinimo || 0)
+    );
+
+    mostrarTabla(bajoStock, "Medicamentos con Bajo Stock");
+}
+
+function mostrarProximosVencer() {
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    const limite = new Date();
+    limite.setDate(hoy.getDate() + 7);
+    limite.setHours(23,59,59,999);
+
+    const proximos = productos.filter(p => {
+
+        if (!p.fechaVencimiento) return false;
+
+        const fecha = new Date(p.fechaVencimiento);
+        if (isNaN(fecha)) return false;
+
+        return fecha >= hoy && fecha <= limite;
+    });
+
+    mostrarTabla(proximos, "Medicamentos Próximos a Vencer (7 días)");
+}
+
+function mostrarTabla(lista, titulo) {
+
+    const tabla = document.getElementById("tablaAlertas");
+    tabla.innerHTML = "";
+
+    if (lista.length === 0) {
+        tabla.innerHTML = `
+            <tr>
+                <td colspan="3" style="text-align:center;">
+                    No hay productos en alerta
+                </td>
+            </tr>
+        `;
+    } else {
+        lista.forEach(p => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${p.nombre}</td>
+                    <td>${p.stock}</td>
+                    <td>${p.fechaVencimiento || "No aplica"}</td>
+                </tr>
+            `;
+        });
+    }
+
+    document.getElementById("tituloAlerta").innerText = titulo;
+    document.getElementById("panelAlertas").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
